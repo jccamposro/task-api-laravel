@@ -40,7 +40,7 @@ El archivo .env.example ya viene configurado con (**se debe configurar el DB_DAT
 
 Ejecuta las migraciones:
 
-    php artisan migrate --seed
+    php artisan migrate:fresh --seed
 
 Inicia el servidor:
 
