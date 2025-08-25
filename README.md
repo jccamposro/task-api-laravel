@@ -57,31 +57,82 @@ Todas las peticiones deben incluir el header con el token definido en .env:
     curl -X POST http://127.0.0.1:8000/api/tasks \
 
 📌 Endpoints principales
-Crear tarea
-   
-    curl -X POST http://127.0.0.1:8000/api/tasks \
+
+Rutas públicas (no necesitan token)
+
+📌 Listar usuarios
+
+    curl -X GET http://localhost:8000/api/users
+
+
+📌 Listar tareas de un usuario (ej: usuario con id=1)
+
+    curl -X GET http://localhost:8000/api/users/1/tasks
+
+Rutas protegidas (con Bearer token)
+
+📌 Crear tarea (válida)
+
+    curl -X POST http://localhost:8000/api/tasks \
     -H "Authorization: Bearer secreto123" \
     -H "Content-Type: application/json" \
-    -d '{"title":"Mi primera tarea","description":"Descripción de la tarea"}'
-Listar todas las tareas
-    
-    curl -X GET http://127.0.0.1:8000/api/tasks \
-    -H "Authorization: Bearer secreto123"
-Ver una tarea por ID
+    -d '{"title":"Tarea de prueba","description":"Probando la API","user_id":1}'
 
-    curl -X GET http://127.0.0.1:8000/api/tasks/1 \
-    -H "Authorization: Bearer secreto123"
-Actualizar una tarea
 
-    curl -X PUT http://127.0.0.1:8000/api/tasks/1 \
+📌 Crear tarea (inválida: título muy corto)
+
+    curl -X POST http://localhost:8000/api/tasks \
     -H "Authorization: Bearer secreto123" \
     -H "Content-Type: application/json" \
-    -d '{"title":"Tarea actualizada","description":"Nueva descripción"}'
+    -d '{"title":"Hey","description":"Muy corta","user_id":1}'
 
-Eliminar una tarea
 
-    curl -X DELETE http://127.0.0.1:8000/api/tasks/1 \
+📌 Crear tarea sin token (debe fallar)
+
+    curl -X POST http://localhost:8000/api/tasks \
+    -H "Content-Type: application/json" \
+    -d '{"title":"Tarea sin token","description":"Debe fallar","user_id":1}'
+
+
+📌 Listar todas las tareas (con token)
+
+    curl -X GET http://localhost:8000/api/tasks \
     -H "Authorization: Bearer secreto123"
+
+
+📌 Listar todas las tareas (sin token, debe fallar)
+
+    curl -X GET http://localhost:8000/api/tasks
+
+
+📌 Actualizar tarea (ej: tarea con id=1)
+
+    curl -X PUT http://localhost:8000/api/tasks/1 \
+    -H "Authorization: Bearer secreto123" \
+    -H "Content-Type: application/json" \
+    -d '{"title":"Tarea actualizada","description":"Ahora con cambios"}'
+
+
+📌 Actualizar tarea inexistente (ej: id=999)
+
+    curl -X PUT http://localhost:8000/api/tasks/999 \
+    -H "Authorization: Bearer secreto123" \
+    -H "Content-Type: application/json" \
+    -d '{"title":"Probando error","description":"No existe"}'
+
+
+📌 Eliminar tarea (ej: id=1)
+
+    curl -X DELETE http://localhost:8000/api/tasks/1 \
+    -H "Authorization: Bearer secreto123"
+
+
+📌 Eliminar tarea inexistente (ej: id=999)
+
+    curl -X DELETE http://localhost:8000/api/tasks/999 \
+    -H "Authorization: Bearer secreto123"
+
+
 🧪 Pruebas
 
 Para correr las pruebas automáticas:
