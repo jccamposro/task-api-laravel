@@ -1,66 +1,130 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Task API - Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este proyecto es una **API REST** construida con **Laravel** para la gestión de tareas.
 
-## About Laravel
+## 🚀 Requisitos previos
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- PHP >= 8.1  
+- Composer  
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+(No necesitas instalar MySQL, este proyecto ya viene configurado con **SQLite**).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## ⚙️ Instalación y ejecución
 
-## Learning Laravel
+1. Clona este repositorio:
+   ```bash
+   git clone https://github.com/jccamposro/task-api-laravel.git
+   cd task-api-laravel
+Instala dependencias:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+bash
+Copiar
+Editar
+composer install
+Copia el archivo de entorno y genera la clave de aplicación:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+bash
+Copiar
+Editar
+cp .env.example .env
+php artisan key:generate
+El archivo .env.example ya viene configurado con:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+env
+Copiar
+Editar
+API_TOKEN=secreto123
+DB_CONNECTION=sqlite
+DB_DATABASE=/absolute/path/to/database/database.sqlite
+Crea la base de datos SQLite vacía:
 
-## Laravel Sponsors
+bash
+Copiar
+Editar
+touch database/database.sqlite
+Ejecuta las migraciones:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+bash
+Copiar
+Editar
+php artisan migrate
+Inicia el servidor:
 
-### Premium Partners
+bash
+Copiar
+Editar
+php artisan serve
+La API quedará disponible en:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+cpp
+Copiar
+Editar
+http://127.0.0.1:8000
+🔑 Autenticación
+Todas las peticiones deben incluir el header con el token definido en .env:
 
-## Contributing
+http
+Copiar
+Editar
+Authorization: Bearer secreto123
+📌 Endpoints principales
+1. Crear tarea
+bash
+Copiar
+Editar
+curl -X POST http://127.0.0.1:8000/api/tasks \
+-H "Authorization: Bearer secreto123" \
+-H "Content-Type: application/json" \
+-d '{"title":"Mi primera tarea","description":"Descripción de la tarea"}'
+2. Listar todas las tareas
+bash
+Copiar
+Editar
+curl -X GET http://127.0.0.1:8000/api/tasks \
+-H "Authorization: Bearer secreto123"
+3. Ver una tarea por ID
+bash
+Copiar
+Editar
+curl -X GET http://127.0.0.1:8000/api/tasks/1 \
+-H "Authorization: Bearer secreto123"
+4. Actualizar una tarea
+bash
+Copiar
+Editar
+curl -X PUT http://127.0.0.1:8000/api/tasks/1 \
+-H "Authorization: Bearer secreto123" \
+-H "Content-Type: application/json" \
+-d '{"title":"Tarea actualizada","description":"Nueva descripción"}'
+5. Eliminar una tarea
+bash
+Copiar
+Editar
+curl -X DELETE http://127.0.0.1:8000/api/tasks/1 \
+-H "Authorization: Bearer secreto123"
+🧪 Pruebas
+Para correr las pruebas automáticas:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+bash
+Copiar
+Editar
+php artisan test
+📌 Postman Collection
+Puedes importar una colección en Postman con los siguientes datos:
 
-## Code of Conduct
+Base URL: http://127.0.0.1:8000/api
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Auth: Header → Authorization: Bearer secreto123
 
-## Security Vulnerabilities
+Endpoints disponibles:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+POST /tasks → Crear tarea
 
-## License
+GET /tasks → Listar tareas
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+GET /tasks/{id} → Ver tarea
+
+PUT /tasks/{id} → Actualizar tarea
+
+DELETE /tasks/{id} → Eliminar tarea
+
