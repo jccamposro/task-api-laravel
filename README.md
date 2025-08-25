@@ -25,16 +25,18 @@ Copia el archivo de entorno y genera la clave de aplicación:
     cp .env.example .env
     php artisan key:generate
     
+
+
+Crea la base de datos SQLite vacía:
+
+    touch database/database.sqlite
+
 El archivo .env.example ya viene configurado con (**se debe configurar el DB_DATABASE con la ruta completa del archivo**):
 
 
     API_TOKEN=secreto123
     DB_CONNECTION=sqlite
-    DB_DATABASE=/absolute/path/to/database/database.sqlite
-
-Crea la base de datos SQLite vacía:
-
-    touch database/database.sqlite
+    DB_DATABASE=/ruta/al/archivo_nuevo/database/database.sqlite
 
 Ejecuta las migraciones:
 
